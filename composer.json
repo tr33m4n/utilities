@@ -1,0 +1,14 @@
+{
+    "name": "danieldoyle/happy-utilities",
+    "description": "A very happy utility collection",
+    "authors": [
+        {
+            "name": "Daniel Doyle",
+            "email": "tr33m4n@googlemail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"HappyUtilities\\": "src/"}
+    },
+    "require": {}
+}
