@@ -14,6 +14,8 @@ use HappyUtilities\Data\DataObject;
  */
 class Config extends DataObject
 {
+    const HAPPYUTILITIES_CONFIG_PATH = '';
+
     /**
      * Config constructor.
      */
@@ -53,10 +55,16 @@ class Config extends DataObject
      */
     protected function getConfigPath() : string
     {
-        if (!defined('HAPPYUTILITIES_CONFIG_PATH')) {
-            return dirname(__FILE__) . '/../../config/';
+        $configPath = dirname(__FILE__) . '/../../config';
+
+        if (strlen(static::HAPPYUTILITIES_CONFIG_PATH)) {
+            $configPath = rtrim(static::HAPPYUTILITIES_CONFIG_PATH, '/') . '/';
         }
 
-        return rtrim(HAPPYUTILITIES_CONFIG_PATH, '/') . '/';
+        if (defined('HAPPYUTILITIES_CONFIG_PATH')) {
+            $configPath = rtrim(HAPPYUTILITIES_CONFIG_PATH, '/') . '/';
+        }
+
+        return rtrim($configPath, '/') . '/';
     }
 }
