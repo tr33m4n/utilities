@@ -30,13 +30,29 @@ class Config extends DataObject
     }
 
     /**
+     * Get config by type
+     *
+     * @author Daniel Doyle <dd@amp.co>
+     * @param string $configType Config type
+     * @return mixed
+     */
+    public function getConfigByType(string $configType = '')
+    {
+        if (!strlen($configType)) {
+            return parent::getAll();
+        }
+
+        return $this->get($configType);
+    }
+
+    /**
      * Set config
      *
      * @author Daniel Doyle <dd@amp.co>
      * @throws \HappyUtilities\Exceptions\MissingConfigException
      * @return void
      */
-    public function setConfig()
+    protected function setConfig()
     {
         $configFiles = glob($this->getConfigPath() . '*.php');
 
@@ -46,7 +62,7 @@ class Config extends DataObject
 
         // For each config file, merge into data array
         foreach ($configFiles as $configFilePath) {
-            $this->setAll($this->getAll() + include $configFilePath);
+            $this->set(basename($configFilePath, '.php'), include $configFilePath);
         }
     }
 
