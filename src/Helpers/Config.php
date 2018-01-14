@@ -15,11 +15,6 @@ use HappyUtilities\Data\DataObject;
 class Config extends DataObject
 {
     /**
-     * Config path override
-     */
-    const HAPPYUTILITIES_CONFIG_PATH = '';
-
-    /**
      * Config constructor.
      *
      * @param string $configType Config type
@@ -78,12 +73,7 @@ class Config extends DataObject
         // Default path
         $configPath = dirname(__FILE__) . '/../../config';
 
-        // Check if class has path overrides and set those instead of default
-        if (strlen(static::HAPPYUTILITIES_CONFIG_PATH)) {
-            $configPath = static::HAPPYUTILITIES_CONFIG_PATH;
-        }
-
-        // Check if global path has been defined, and set that instead of default or class
+        // Check if global path has been defined, and set that instead of default
         if (defined('HAPPYUTILITIES_CONFIG_PATH')) {
             $configPath = HAPPYUTILITIES_CONFIG_PATH;
         }
