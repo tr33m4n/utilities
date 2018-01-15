@@ -7,6 +7,12 @@
             "email": "tr33m4n@googlemail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://satis.daniel-doyle.co.uk"
+        }
+    ],
     "autoload": {
         "psr-4": {"HappyUtilities\\": "src/"}
     },
