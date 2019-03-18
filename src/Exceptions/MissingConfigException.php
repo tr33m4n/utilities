@@ -1,6 +1,6 @@
 <?php
 
-namespace HappyUtilities\Exceptions;
+namespace DanielDoyle\HappyUtilities\Exceptions;
 
 class MissingConfigException extends \Exception
 {

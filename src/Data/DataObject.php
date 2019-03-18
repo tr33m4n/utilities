@@ -1,15 +1,13 @@
 <?php
 
-namespace HappyUtilities\Data;
+namespace DanielDoyle\HappyUtilities\Data;
 
 /**
  * Class DataObject
  *
- * @package HappyUtilities\Data
- *
- * @author  Daniel Doyle <dd@amp.co>
+ * @package DanielDoyle\HappyUtilities\Data
  */
-class DataObject implements \Iterator
+class DataObject implements DataObjectInterface
 {
     /**
      * @var int
