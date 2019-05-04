@@ -1,14 +1,14 @@
 <?php
 
-namespace DanielDoyle\HappyUtilities\Helpers;
+namespace DanielDoyle\HappyUtilities\Config;
 
-use DanielDoyle\HappyUtilities\Exceptions\MissingConfigException;
+use DanielDoyle\HappyUtilities\Exception\MissingConfigException;
 use DanielDoyle\HappyUtilities\Data\DataObject;
 
 /**
  * Class ConfigProvider
  *
- * @package DanielDoyle\HappyUtilities\Helpers
+ * @package DanielDoyle\HappyUtilities\Config
  */
 class ConfigProvider extends DataObject
 {
@@ -18,11 +18,6 @@ class ConfigProvider extends DataObject
     const CONFIG_FILE_EXTENSION = '.php';
 
     /**
-     * @var string
-     */
-    private $scope;
-
-    /**
      * @var array
      */
     private $additionalConfigPaths;
@@ -30,47 +25,31 @@ class ConfigProvider extends DataObject
     /**
      * AbstractConfigProvider constructor.
      *
-     * @param string|null $scope
-     * @param array       $additionalConfigPaths
+     * @param array $additionalConfigPaths
      */
     public function __construct(
-        string $scope = null,
         array $additionalConfigPaths = []
     ) {
         parent::__construct();
 
         $this->additionalConfigPaths = $additionalConfigPaths;
-        $this->scope = $scope;
-
         $this->initConfig();
     }
 
     /**
      * Set config
      *
-     * @author Daniel Doyle <dd@amp.co>
-     * @throws \DanielDoyle\HappyUtilities\Exceptions\MissingConfigException
+     * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
      * @return void
      */
     protected function initConfig()
     {
-        $getConfigFileSlug = function (string $filePath) {
-            return basename($filePath, self::CONFIG_FILE_EXTENSION);
-        };
-
         $distinctConfigFiles = [];
         foreach ($this->getConfigPaths() as $configPath) {
             $configFiles = glob($configPath);
 
-            if ($this->scope) {
-                // Reduce file paths to those that match the scope
-                array_filter($configFiles, function ($path) use ($getConfigFileSlug) {
-                    return $getConfigFileSlug($path) === $this->scope;
-                });
-            }
-
             foreach ($configFiles as $configFile) {
-                $configFileSlug = $getConfigFileSlug($configFile);
+                $configFileSlug = basename($configFile, self::CONFIG_FILE_EXTENSION);
 
                 /**
                  * If the config file has already been defined in the $distinctConfigFiles array, skip. Due to the order
@@ -81,7 +60,7 @@ class ConfigProvider extends DataObject
                 }
 
                 // Include config file
-                $distinctConfigFiles[$configFileSlug] = include $configFile;
+                $distinctConfigFiles[$configFileSlug] = new ConfigItem(include $configFile);
             }
         }
 
@@ -89,7 +68,7 @@ class ConfigProvider extends DataObject
             throw new MissingConfigException('There are no config files present in the config directories!');
         }
 
-        $this->setAll($this->scope ? $distinctConfigFiles[$this->scope] : $distinctConfigFiles);
+        $this->setAll($distinctConfigFiles);
     }
 
     /**
@@ -99,7 +78,6 @@ class ConfigProvider extends DataObject
      * 2. Additional paths passed to the constructor
      * 3. Default config path
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @return array
      */
     protected function getConfigPaths() : array

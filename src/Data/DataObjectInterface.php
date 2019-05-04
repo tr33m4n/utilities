@@ -12,7 +12,6 @@ interface DataObjectInterface extends \IteratorAggregate
     /**
      * Set data
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param string $key   Data key
      * @param mixed  $value Data value
      * @return $this
@@ -22,7 +21,6 @@ interface DataObjectInterface extends \IteratorAggregate
     /**
      * Get data
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param string $key Data to return by key
      * @return mixed
      */
@@ -31,7 +29,6 @@ interface DataObjectInterface extends \IteratorAggregate
     /**
      * Check if key exists
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param string $key Key to check
      * @return bool
      */
@@ -40,7 +37,6 @@ interface DataObjectInterface extends \IteratorAggregate
     /**
      * Atomically set data array
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param array $dataArray Data array
      * @return $this
      */
@@ -49,7 +45,6 @@ interface DataObjectInterface extends \IteratorAggregate
     /**
      * Get all data
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @return array
      */
     public function getAll() : array;
