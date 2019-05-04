@@ -10,17 +10,12 @@ namespace DanielDoyle\HappyUtilities\Data;
 class DataObject implements DataObjectInterface
 {
     /**
-     * @var int
-     */
-    protected $index = 0;
-
-    /**
      * @var array
      */
     protected $data = [];
 
     /**
-     * Iterator constructor.
+     * DataObject constructor.
      *
      * @param array $dataArray Atomically add data on construct
      */
@@ -32,9 +27,8 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * Set data
+     * {@inheritdoc}
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param string $key   Data key
      * @param mixed  $value Data value
      * @return $this
@@ -47,9 +41,8 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * Get data
+     * {@inheritdoc}
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param string $key Data to return by key
      * @return mixed
      */
@@ -63,9 +56,8 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * Check if key exists
+     * {@inheritdoc}
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param string $key Key to check
      * @return bool
      */
@@ -75,9 +67,8 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * Atomically set data array
+     * {@inheritdoc}
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param array $dataArray Data array
      * @return $this
      */
@@ -89,9 +80,8 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * Get all data
+     * {@inheritdoc}
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @return array
      */
     public function getAll() : array
@@ -100,57 +90,16 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * Reset array
+     * {@inheritdoc}
      *
-     * @author Daniel Doyle <dd@amp.co>
-     * @return void
-     */
-    public function rewind()
-    {
-        $this->index = 0;
-    }
-
-    /**
-     * Return current index value
-     *
-     * @author Daniel Doyle <dd@amp.co>
      * @return mixed
      */
-    public function current()
+    public function getIterator()
     {
-        return $this->data[$this->index];
-    }
-
-    /**
-     * Return current index
-     *
-     * @author Daniel Doyle <dd@amp.co>
-     * @return int
-     */
-    public function key() : int
-    {
-        return $this->index;
-    }
-
-    /**
-     * Increment index
-     *
-     * @author Daniel Doyle <dd@amp.co>
-     * @return void
-     */
-    public function next()
-    {
-        $this->index++;
-    }
-
-    /**
-     * Check is valid
-     *
-     * @author Daniel Doyle <dd@amp.co>
-     * @return bool
-     */
-    public function valid() : bool
-    {
-        return isset($this->data[$this->index]);
+        return (function () {
+            while (list($key, $val) = each($this->data)) {
+                yield $key => $val;
+            }
+        })();
     }
 }

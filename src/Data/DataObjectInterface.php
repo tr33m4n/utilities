@@ -7,7 +7,7 @@ namespace DanielDoyle\HappyUtilities\Data;
  *
  * @package DanielDoyle\HappyUtilities\Data
  */
-interface DataObjectInterface extends \Iterator
+interface DataObjectInterface extends \IteratorAggregate
 {
     /**
      * Set data
