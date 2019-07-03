@@ -14,7 +14,12 @@
         }
     ],
     "autoload": {
-        "psr-4": {"DanielDoyle\\HappyUtilities\\": "src/"}
+        "files": [
+            "helpers/config.php"
+        ],
+        "psr-4": {
+            "DanielDoyle\\HappyUtilities\\": "src/"
+        }
     },
     "require": {},
     "require-dev": {

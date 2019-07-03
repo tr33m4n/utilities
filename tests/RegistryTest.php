@@ -16,6 +16,7 @@ final class RegistryTest extends TestCase
      *
      * @test
      * @dataProvider hasDataProvider
+     * @throws RegistryException
      * @param mixed $key
      * @param mixed $value
      * @param bool $expected
@@ -31,6 +32,7 @@ final class RegistryTest extends TestCase
      * Assert set throws exception if key exists
      *
      * @test
+     * @throws RegistryException
      * @return void
      */
     public function assertSetThrowsAnExceptionIfKeyExists()
@@ -45,6 +47,7 @@ final class RegistryTest extends TestCase
      *
      * @test
      * @dataProvider getDataProvider
+     * @throws RegistryException
      * @param string $key
      * @param mixed $value
      * @return void
