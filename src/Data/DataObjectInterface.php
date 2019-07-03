@@ -2,19 +2,21 @@
 
 namespace DanielDoyle\HappyUtilities\Data;
 
+use IteratorAggregate;
+
 /**
  * Interface DataObjectInterface
  *
  * @package DanielDoyle\HappyUtilities\Data
  */
-interface DataObjectInterface extends \IteratorAggregate
+interface DataObjectInterface extends IteratorAggregate
 {
     /**
      * Set data
      *
      * @param string $key   Data key
      * @param mixed  $value Data value
-     * @return $this
+     * @return \DanielDoyle\HappyUtilities\Data\DataObjectInterface
      */
     public function set(string $key, $value);
 
@@ -38,7 +40,7 @@ interface DataObjectInterface extends \IteratorAggregate
      * Atomically set data array
      *
      * @param array $dataArray Data array
-     * @return $this
+     * @return \DanielDoyle\HappyUtilities\Data\DataObjectInterface
      */
     public function setAll(array $dataArray);
 

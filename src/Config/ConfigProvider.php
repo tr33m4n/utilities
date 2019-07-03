@@ -49,6 +49,10 @@ class ConfigProvider extends DataObject
         foreach ($this->getConfigPaths() as $configPath) {
             $configFiles = glob($configPath);
 
+            if ($configFiles === false) {
+                throw new MissingConfigException('An error occurred whilst iterating the config paths!');
+            }
+
             foreach ($configFiles as $configFile) {
                 $configFileSlug = basename($configFile, self::CONFIG_FILE_EXTENSION);
 
