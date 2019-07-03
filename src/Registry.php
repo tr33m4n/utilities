@@ -63,6 +63,7 @@ class Registry
     /**
      * Set config provider
      *
+     * @throws RegistryException
      * @param \DanielDoyle\HappyUtilities\Config\ConfigProvider $configProvider
      */
     public static function setConfigProvider(ConfigProvider $configProvider)

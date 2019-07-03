@@ -25,6 +25,7 @@ class ConfigProvider extends DataObject
     /**
      * AbstractConfigProvider constructor.
      *
+     * @throws MissingConfigException
      * @param array $additionalConfigPaths
      */
     public function __construct(

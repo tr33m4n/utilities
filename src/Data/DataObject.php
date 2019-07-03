@@ -97,8 +97,8 @@ class DataObject implements DataObjectInterface
     public function getIterator()
     {
         return (function () {
-            while (list($key, $val) = each($this->data)) {
-                yield $key => $val;
+            foreach ($this->data as $key => $value) {
+                yield $key => $value;
             }
         })();
     }
