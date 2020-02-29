@@ -2,9 +2,11 @@
 
 namespace tr33m4n\Utilities\Config;
 
-use tr33m4n\Utilities\Exception\MissingConfigException;
+use tr33m4n\Utilities\Config\Adapter\FileAdapterInterface;
+use tr33m4n\Utilities\Config\Adapter\PhpFileAdapter;
 use tr33m4n\Utilities\Data\DataCollection;
 use tr33m4n\Utilities\Data\DataCollectionInterface;
+use tr33m4n\Utilities\Exception\MissingConfigException;
 
 /**
  * Class ConfigProvider
@@ -14,26 +16,29 @@ use tr33m4n\Utilities\Data\DataCollectionInterface;
 class ConfigProvider extends DataCollection
 {
     /**
-     * Config file extension
-     */
-    const CONFIG_FILE_EXTENSION = '.php';
-
-    /**
      * @var array
      */
     private $configPaths;
 
     /**
-     * AbstractConfigProvider constructor.
+     * @var \tr33m4n\Utilities\Config\Adapter\FileAdapterInterface
+     */
+    private $fileAdapter;
+
+    /**
+     * ConfigProvider constructor.
      *
-     * @param array $configPaths
+     * @param array                                                       $configPaths
+     * @param \tr33m4n\Utilities\Config\Adapter\FileAdapterInterface|null $fileAdapter
      */
     public function __construct(
-        array $configPaths = []
+        array $configPaths = [],
+        FileAdapterInterface $fileAdapter = null
     ) {
         parent::__construct();
 
         $this->configPaths = $configPaths;
+        $this->fileAdapter = $fileAdapter ?: new PhpFileAdapter();
         $this->initConfig();
     }
 
@@ -66,8 +71,8 @@ class ConfigProvider extends DataCollection
                     return $initConfigFiles = array_reduce(
                         $configFiles,
                         function (array $initConfigFiles, string $configFilePath) {
-                            $initConfigFiles[basename($configFilePath, self::CONFIG_FILE_EXTENSION)] =
-                                ConfigCollection::from(include $configFilePath);
+                            $initConfigFiles[basename($configFilePath, '.' . $this->fileAdapter::getFileExtension())] =
+                                ConfigCollection::from($this->fileAdapter->read($configFilePath));
 
                             return $initConfigFiles;
                         },
@@ -96,7 +101,11 @@ class ConfigProvider extends DataCollection
 
         // Sanitise config paths and append extension
         return array_map(function (string $path) {
-            return rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '*' . self::CONFIG_FILE_EXTENSION;
+            return rtrim($path, DIRECTORY_SEPARATOR)
+                . DIRECTORY_SEPARATOR
+                . '*'
+                . '.'
+                . $this->fileAdapter::getFileExtension();
         }, $this->configPaths);
     }
 }

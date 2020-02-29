@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'test1' => 'test1',
-    'test2' => 123,
-    'test3' => [
+    'test3_1' => 'test1',
+    'test3_2' => 123,
+    'test3_3' => [
         'test1' => 'test1',
         'test2' => 123,
         'test3' => [

@@ -76,11 +76,11 @@ final class ConfigProviderTest extends TestCase
     public function assertNestedValuesAreAccessible() : void
     {
         $this->assertEquals(
-            $this->configProvider->get('test1')->get('test3')->get('test3')->get('test2')->get('test1'),
+            $this->configProvider->get('test1')->get('test1_3')->get('test3')->get('test2')->get('test1'),
             'test1'
         );
         $this->assertEquals(
-            config('test1')->get('test3')->get('test3')->get('test2')->get('test1'),
+            config('test1')->get('test1_3')->get('test3')->get('test2')->get('test1'),
             'test1'
         );
     }
@@ -94,9 +94,9 @@ final class ConfigProviderTest extends TestCase
     {
         return [
             'test1' => ConfigCollection::from([
-                'test1' => 'test1',
-                'test2' => 123,
-                'test3' => ConfigCollection::from([
+                'test1_1' => 'test1',
+                'test1_2' => 123,
+                'test1_3' => ConfigCollection::from([
                     'test1' => 'test1',
                     'test2' => 123,
                     'test3' => ConfigCollection::from([
@@ -128,9 +128,9 @@ final class ConfigProviderTest extends TestCase
                 ])
             ]),
             'test3' => ConfigCollection::from([
-                'test1' => 'test1',
-                'test2' => 123,
-                'test3' => ConfigCollection::from([
+                'test3_1' => 'test1',
+                'test3_2' => 123,
+                'test3_3' => ConfigCollection::from([
                     'test1' => 'test1',
                     'test2' => 123,
                     'test3' => ConfigCollection::from([

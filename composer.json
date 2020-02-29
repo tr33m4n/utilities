@@ -26,6 +26,7 @@
     },
     "scripts": {
         "test": [
+            "composer validate",
             "vendor/bin/phpstan analyse --no-interaction --no-progress",
             "vendor/bin/phpunit --bootstrap vendor/autoload.php tests"
         ]

@@ -46,7 +46,11 @@ foreach ($dataCollection as $key => $value) {
 A simple configuration parser and provider. This class inherits all the functionality of a data collection, however when the class is instantiated
 it will aggregate config files into a nested configuration collection structure. Config paths can be passed to the constructor or
 defined by setting the global constant `ROOT_CONFIG_PATH`. The `ROOT_CONFIG_PATH` path will always take priority when parsing the files, so if you have a config file with the same name
-in the constructor path and the global path, the global will overwrite it. A typical config file might look like:
+in the constructor path and the global path, the global will overwrite it.
+
+The config provider comes bundled with a PHP file adapter `\tr33m4n\Utilities\Config\Adapter\PhpFileAdapter`. An alternative file adapter can be passed when instantiating the class.
+ 
+A typical config file using the default adapter might look like:
 ```php
 <?php
 // Filename: test1.php
