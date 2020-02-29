@@ -10,31 +10,40 @@ A simple statically accessed registry class
 - `Registry::setConfigProvider` A special case for globally setting a config provider
 - `Registry::getConfigProvider` A special case for getting a globally set config provider
 
-## `\tr33m4n\Utilities\Data\DataObject`
-A simple, iterable object for storing data
+## `\tr33m4n\Utilities\Data\DataCollection`
+A simple, iterable collection for storing data
 
-- `$dataObject->set` Set an item to the data object
-- `$dataObject->get` Get an item from the data object
-- `$dataObject->has` Check if an item exists in the data object
-- `$dataObject->setAll` Bulk set items to the data object
-- `$dataObject->getAll` Get all items set against the data object
+- `$dataCollection->set` Set an item to the data collection
+- `$dataCollection->get` Get an item from the data collection
+- `$dataCollection->has` Check if an item exists in the data collection
+- `$dataCollection->setAll` Bulk set items to the data collection
+- `$dataCollection->getAll` Get all items set against the data collection
 
-An array of items can also be passed to populate the data object when instantiating. The object can also be iterated, for example:
+An array of items can also be passed to populate the data collection when instantiating. The collection can also be iterated, for example:
 ```php
 <?php
 
-$dataObject = new DataObject([
+$dataCollection = new DataCollection([
     'test1' => 'test1',
     'test2' => 'test2'
 ]);
 
-foreach ($dataObject as $key => $value) {
+/**
+ * Or 
+ * 
+ * $dataCollection = DataCollection::from([
+ *      'test1' => 'test1',
+ *      'test2' => 'test2'
+ * ]);
+ */
+
+foreach ($dataCollection as $key => $value) {
     echo "$key : $value\n";
 }
 ```
 
 ## `\tr33m4n\Utilities\Config\ConfigProvider`
-A simple configuration parser and provider. This class inherits all the functionality of a data object, however when the class is instantiated
+A simple configuration parser and provider. This class inherits all the functionality of a data collection, however when the class is instantiated
 it will aggregate config files into a nested configuration collection structure. Config paths can be passed to the constructor or
 defined by setting the global constant `ROOT_CONFIG_PATH`. The `ROOT_CONFIG_PATH` path will always take priority when parsing the files, so if you have a config file with the same name
 in the constructor path and the global path, the global will overwrite it. A typical config file might look like:
@@ -82,7 +91,7 @@ When parsing this configuration structure, the filename will be used for the roo
     ])
 ];
 ```
-These values can then be accessed using the data objects `get` method. For example:
+These values can then be accessed using the data collections `get` method. For example:
 ```php
 <?php
 

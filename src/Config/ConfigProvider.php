@@ -3,14 +3,15 @@
 namespace tr33m4n\Utilities\Config;
 
 use tr33m4n\Utilities\Exception\MissingConfigException;
-use tr33m4n\Utilities\Data\DataObject;
+use tr33m4n\Utilities\Data\DataCollection;
+use tr33m4n\Utilities\Data\DataCollectionInterface;
 
 /**
  * Class ConfigProvider
  *
  * @package tr33m4n\Utilities\Config
  */
-class ConfigProvider extends DataObject
+class ConfigProvider extends DataCollection
 {
     /**
      * Config file extension
@@ -37,6 +38,17 @@ class ConfigProvider extends DataObject
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @param array $configPaths Atomically add data on construct
+     * @return \tr33m4n\Utilities\Data\DataCollectionInterface
+     */
+    public static function from(array $configPaths = []) : DataCollectionInterface
+    {
+        return new self($configPaths);
+    }
+
+    /**
      * Set config
      *
      * @return void
@@ -55,7 +67,7 @@ class ConfigProvider extends DataObject
                         $configFiles,
                         function (array $initConfigFiles, string $configFilePath) {
                             $initConfigFiles[basename($configFilePath, self::CONFIG_FILE_EXTENSION)] =
-                                new ConfigCollection(include $configFilePath);
+                                ConfigCollection::from(include $configFilePath);
 
                             return $initConfigFiles;
                         },

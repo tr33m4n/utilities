@@ -15,6 +15,11 @@ use tr33m4n\Utilities\Registry;
  */
 final class ConfigProviderTest extends TestCase
 {
+    const CONFIG_PATHS = [
+        __DIR__ . '/../../fixtures/config',
+        __DIR__ . '/../../fixtures/config_override' // Add path to test overriding config files
+    ];
+
     /**
      * @var \tr33m4n\Utilities\Config\ConfigProvider
      */
@@ -27,10 +32,7 @@ final class ConfigProviderTest extends TestCase
      */
     public function setUp() : void
     {
-        $this->configProvider = new ConfigProvider([
-            __DIR__ . '/../../fixtures/config',
-            __DIR__ . '/../../fixtures/config_override' // Add path to test overriding config files
-        ]);
+        $this->configProvider = new ConfigProvider(self::CONFIG_PATHS);
 
         try {
             // Register config provider so we can test the helper methods
@@ -38,6 +40,17 @@ final class ConfigProviderTest extends TestCase
         } catch (RegistryException $exception) {
             // Do nothing as config provider has already been set
         }
+    }
+
+    /**
+     * Test that the config provider can be created statically
+     *
+     * @test
+     * @return void
+     */
+    public function assertConfigProviderCanBeCreatedStatically() : void
+    {
+        $this->assertEquals(ConfigProvider::from(self::CONFIG_PATHS), $this->configProvider);
     }
 
     /**
@@ -80,52 +93,52 @@ final class ConfigProviderTest extends TestCase
     private function expectedConfigStructure() : array
     {
         return [
-            'test1' => new ConfigCollection([
+            'test1' => ConfigCollection::from([
                 'test1' => 'test1',
                 'test2' => 123,
-                'test3' => new ConfigCollection([
+                'test3' => ConfigCollection::from([
                     'test1' => 'test1',
                     'test2' => 123,
-                    'test3' => new ConfigCollection([
+                    'test3' => ConfigCollection::from([
                         'test1' => 'test1',
-                        'test2' => new ConfigCollection([
+                        'test2' => ConfigCollection::from([
                             'test1' => 'test1'
                         ]),
-                        'test3' => new ConfigCollection([
+                        'test3' => ConfigCollection::from([
                             'test1' => 'test1'
                         ])
                     ])
                 ])
             ]),
-            'test2' => new ConfigCollection([
+            'test2' => ConfigCollection::from([
                 'override1' => 'override1',
                 'override2' => 123,
-                'override3' => new ConfigCollection([
+                'override3' => ConfigCollection::from([
                     'override1' => 'override1',
                     'override2' => 123,
-                    'override3' => new ConfigCollection([
+                    'override3' => ConfigCollection::from([
                         'override1' => 'override1',
-                        'override2' => new ConfigCollection([
+                        'override2' => ConfigCollection::from([
                             'override1' => 'override1'
                         ]),
-                        'override3' => new ConfigCollection([
+                        'override3' => ConfigCollection::from([
                             'override1' => 'override1'
                         ])
                     ])
                 ])
             ]),
-            'test3' => new ConfigCollection([
+            'test3' => ConfigCollection::from([
                 'test1' => 'test1',
                 'test2' => 123,
-                'test3' => new ConfigCollection([
+                'test3' => ConfigCollection::from([
                     'test1' => 'test1',
                     'test2' => 123,
-                    'test3' => new ConfigCollection([
+                    'test3' => ConfigCollection::from([
                         'test1' => 'test1',
-                        'test2' => new ConfigCollection([
+                        'test2' => ConfigCollection::from([
                             'test1' => 'test1'
                         ]),
-                        'test3' => new ConfigCollection([
+                        'test3' => ConfigCollection::from([
                             'test1' => 'test1'
                         ])
                     ])

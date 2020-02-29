@@ -5,20 +5,28 @@ namespace tr33m4n\Utilities\Data;
 use IteratorAggregate;
 
 /**
- * Interface DataObjectInterface
+ * Interface DataCollectionInterface
  *
  * @package tr33m4n\Utilities\Data
  */
-interface DataObjectInterface extends IteratorAggregate
+interface DataCollectionInterface extends IteratorAggregate
 {
+    /**
+     * Create statically from data array
+     *
+     * @param array $dataArray Atomically add data on construct
+     * @return \tr33m4n\Utilities\Data\DataCollectionInterface
+     */
+    public static function from(array $dataArray = []) : DataCollectionInterface;
+
     /**
      * Set data
      *
      * @param string $key   Data key
      * @param mixed  $value Data value
-     * @return \tr33m4n\Utilities\Data\DataObjectInterface
+     * @return \tr33m4n\Utilities\Data\DataCollectionInterface
      */
-    public function set(string $key, $value);
+    public function set(string $key, $value) : DataCollectionInterface;
 
     /**
      * Get data
@@ -40,9 +48,9 @@ interface DataObjectInterface extends IteratorAggregate
      * Atomically set data array
      *
      * @param array $dataArray Data array
-     * @return \tr33m4n\Utilities\Data\DataObjectInterface
+     * @return \tr33m4n\Utilities\Data\DataCollectionInterface
      */
-    public function setAll(array $dataArray);
+    public function setAll(array $dataArray) : DataCollectionInterface;
 
     /**
      * Get all data

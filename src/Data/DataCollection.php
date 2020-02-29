@@ -3,11 +3,11 @@
 namespace tr33m4n\Utilities\Data;
 
 /**
- * Class DataObject
+ * Class DataCollection
  *
  * @package tr33m4n\Utilities\Data
  */
-class DataObject implements DataObjectInterface
+class DataCollection implements DataCollectionInterface
 {
     /**
      * @var array
@@ -15,7 +15,7 @@ class DataObject implements DataObjectInterface
     private $data = [];
 
     /**
-     * DataObject constructor.
+     * DataCollection constructor.
      *
      * @param array $dataArray Atomically add data on construct
      */
@@ -29,11 +29,22 @@ class DataObject implements DataObjectInterface
     /**
      * {@inheritdoc}
      *
+     * @param array $dataArray Atomically add data on construct
+     * @return \tr33m4n\Utilities\Data\DataCollectionInterface
+     */
+    public static function from(array $dataArray = []) : DataCollectionInterface
+    {
+        return new self($dataArray);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @param string $key   Data key
      * @param mixed  $value Data value
      * @return $this
      */
-    public function set(string $key, $value)
+    public function set(string $key, $value) : DataCollectionInterface
     {
         $this->data[$key] = $value;
 
@@ -72,7 +83,7 @@ class DataObject implements DataObjectInterface
      * @param array $dataArray Data array
      * @return $this
      */
-    public function setAll(array $dataArray)
+    public function setAll(array $dataArray) : DataCollectionInterface
     {
         $this->data = $dataArray;
 

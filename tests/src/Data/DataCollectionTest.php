@@ -3,17 +3,17 @@
 namespace tr33m4n\Utilities\Tests\Data;
 
 use PHPUnit\Framework\TestCase;
-use tr33m4n\Utilities\Data\DataObject;
+use tr33m4n\Utilities\Data\DataCollection;
 
 /**
- * DataObjectTest class
+ * DataCollectionTest class
  */
-final class DataObjectTest extends TestCase
+final class DataCollectionTest extends TestCase
 {
     /**
-     * @var \tr33m4n\Utilities\Data\DataObject
+     * @var \tr33m4n\Utilities\Data\DataCollection
      */
-    private $dataObject;
+    private $dataCollection;
 
     /**
      * {@inheritdoc}
@@ -22,7 +22,18 @@ final class DataObjectTest extends TestCase
      */
     public function setUp() : void
     {
-        $this->dataObject = new DataObject();
+        $this->dataCollection = new DataCollection();
+    }
+
+    /**
+     * Test that the data collection can be created statically
+     *
+     * @test
+     * @return void
+     */
+    public function assertDataCollectionCanBeCreatedStatically() : void
+    {
+        $this->assertEquals(DataCollection::from(), $this->dataCollection);
     }
 
     /**
@@ -33,7 +44,7 @@ final class DataObjectTest extends TestCase
      */
     public function assertSetReturnsExpectedValue() : void
     {
-        $this->assertEquals($this->dataObject->set('foo', 'bar'), $this->dataObject);
+        $this->assertEquals($this->dataCollection->set('foo', 'bar'), $this->dataCollection);
     }
 
     /**
@@ -47,8 +58,8 @@ final class DataObjectTest extends TestCase
      */
     public function assertGetReturnsExpectedValue($key, $value) : void
     {
-        $this->dataObject->set($key, $value);
-        $this->assertEquals($this->dataObject->get($key), $value);
+        $this->dataCollection->set($key, $value);
+        $this->assertEquals($this->dataCollection->get($key), $value);
     }
 
     /**
@@ -63,8 +74,8 @@ final class DataObjectTest extends TestCase
      */
     public function assertHasReturnsExpectedValue($key, $value, $expected) : void
     {
-        $this->dataObject->set($key, $value);
-        $this->assertEquals($this->dataObject->has($key), $expected);
+        $this->dataCollection->set($key, $value);
+        $this->assertEquals($this->dataCollection->has($key), $expected);
     }
 
     /**
@@ -75,7 +86,7 @@ final class DataObjectTest extends TestCase
      */
     public function assertSetAllReturnsExpectedValue() : void
     {
-        $this->assertEquals($this->dataObject->setAll(['foo' => 'bar']), $this->dataObject);
+        $this->assertEquals($this->dataCollection->setAll(['foo' => 'bar']), $this->dataCollection);
     }
 
     /**
@@ -88,23 +99,23 @@ final class DataObjectTest extends TestCase
     {
         $testData = $this->getDataProviderAsKeyValuePairs();
 
-        $this->dataObject->setAll($testData);
-        $this->assertEquals($this->dataObject->getAll(), $testData);
+        $this->dataCollection->setAll($testData);
+        $this->assertEquals($this->dataCollection->getAll(), $testData);
     }
 
     /**
-     * Assert that the data object can be iterated
+     * Assert that the data collection can be iterated
      *
      * @test
      * @return void
      */
-    public function assertDataObjectCanBeIterated() : void
+    public function assertDataCollectionCanBeIterated() : void
     {
         $testData = $this->getDataProviderAsKeyValuePairs();
-        $this->dataObject->setAll($testData);
+        $this->dataCollection->setAll($testData);
 
         $arrayToCompare = [];
-        foreach ($this->dataObject as $key => $value) {
+        foreach ($this->dataCollection as $key => $value) {
             $arrayToCompare[$key] = $value;
         }
 
