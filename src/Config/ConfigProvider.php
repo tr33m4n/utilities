@@ -20,19 +20,19 @@ class ConfigProvider extends DataObject
     /**
      * @var array
      */
-    private $additionalConfigPaths;
+    private $configPaths;
 
     /**
      * AbstractConfigProvider constructor.
      *
-     * @param array $additionalConfigPaths
+     * @param array $configPaths
      */
     public function __construct(
-        array $additionalConfigPaths = []
+        array $configPaths = []
     ) {
         parent::__construct();
 
-        $this->additionalConfigPaths = $additionalConfigPaths;
+        $this->configPaths = $configPaths;
         $this->initConfig();
     }
 
@@ -72,28 +72,19 @@ class ConfigProvider extends DataObject
      *
      * 1. Global path
      * 2. Additional paths passed to the constructor
-     * 3. Default config path
      *
      * @return array
      */
     private function getConfigPaths() : array
     {
-        $configPaths = [];
-
-        // Default config path
-        $configPaths[] = __DIR__ . '/../../config';
-
-        // Merge any additional paths
-        $configPaths = array_merge($configPaths, $this->additionalConfigPaths);
-
-        // Check if global path has been defined, and add to config array
+        // Check if global path has been defined, and add to path array
         if (defined('ROOT_CONFIG_PATH')) {
-            $configPaths[] = ROOT_CONFIG_PATH;
+            $this->configPaths[] = ROOT_CONFIG_PATH;
         }
 
         // Sanitise config paths and append extension
         return array_map(function (string $path) {
             return rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '*' . self::CONFIG_FILE_EXTENSION;
-        }, $configPaths);
+        }, $this->configPaths);
     }
 }
