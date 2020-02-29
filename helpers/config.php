@@ -1,17 +1,16 @@
 <?php
 
-use DanielDoyle\HappyUtilities\Registry;
-use DanielDoyle\HappyUtilities\Exception\RegistryException;
-use DanielDoyle\HappyUtilities\Config\ConfigProvider;
+use tr33m4n\Utilities\Registry;
+use tr33m4n\Utilities\Exception\RegistryException;
+use tr33m4n\Utilities\Config\ConfigProvider;
 
 /**
  * Helper function for easily accessing the config provider
  *
- * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
- * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
- * @param string $scope                 Scope config
+ * @throws \tr33m4n\Utilities\Exception\RegistryException
  * @param array  $additionalConfigPaths Additional config paths
- * @return \DanielDoyle\HappyUtilities\Config\ConfigProvider
+ * @param string $scope                 Scope config
+ * @return \tr33m4n\Utilities\Config\ConfigProvider
  */
 function config(string $scope = '', array $additionalConfigPaths = [])
 {

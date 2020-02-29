@@ -1,14 +1,14 @@
 <?php
 
-namespace tr33m4n\HappyUtilities\Config;
+namespace tr33m4n\Utilities\Config;
 
-use tr33m4n\HappyUtilities\Exception\MissingConfigException;
-use tr33m4n\HappyUtilities\Data\DataObject;
+use tr33m4n\Utilities\Exception\MissingConfigException;
+use tr33m4n\Utilities\Data\DataObject;
 
 /**
  * Class ConfigProvider
  *
- * @package tr33m4n\HappyUtilities\Config
+ * @package tr33m4n\Utilities\Config
  */
 class ConfigProvider extends DataObject
 {
@@ -25,7 +25,6 @@ class ConfigProvider extends DataObject
     /**
      * AbstractConfigProvider constructor.
      *
-     * @throws MissingConfigException
      * @param array $additionalConfigPaths
      */
     public function __construct(
@@ -40,40 +39,32 @@ class ConfigProvider extends DataObject
     /**
      * Set config
      *
-     * @throws \tr33m4n\HappyUtilities\Exception\MissingConfigException
      * @return void
      */
-    private function initConfig()
+    private function initConfig() : void
     {
-        $distinctConfigFiles = [];
-        foreach ($this->getConfigPaths() as $configPath) {
-            $configFiles = glob($configPath);
+        $this->setAll(
+            array_reduce(
+                $this->getConfigPaths(),
+                function (array $initConfigFiles, string $rootConfigPath) {
+                    if (($configFiles = glob($rootConfigPath)) === false) {
+                        throw new MissingConfigException('An error occurred whilst iterating the config paths!');
+                    }
 
-            if ($configFiles === false) {
-                throw new MissingConfigException('An error occurred whilst iterating the config paths!');
-            }
+                    return $initConfigFiles = array_reduce(
+                        $configFiles,
+                        function (array $initConfigFiles, string $configFilePath) {
+                            $initConfigFiles[basename($configFilePath, self::CONFIG_FILE_EXTENSION)] =
+                                new ConfigCollection(include $configFilePath);
 
-            foreach ($configFiles as $configFile) {
-                $configFileSlug = basename($configFile, self::CONFIG_FILE_EXTENSION);
-
-                /**
-                 * If the config file has already been defined in the $distinctConfigFiles array, skip. Due to the order
-                 * in which the config files are loaded, this should ensure the global > local > default priority
-                 */
-                if (array_key_exists($configFileSlug, $distinctConfigFiles)) {
-                    continue;
-                }
-
-                // Include config file
-                $distinctConfigFiles[$configFileSlug] = new ConfigItem(include $configFile);
-            }
-        }
-
-        if (empty($distinctConfigFiles)) {
-            throw new MissingConfigException('There are no config files present in the config directories!');
-        }
-
-        $this->setAll($distinctConfigFiles);
+                            return $initConfigFiles;
+                        },
+                        $initConfigFiles
+                    );
+                },
+                []
+            )
+        );
     }
 
     /**
@@ -85,19 +76,20 @@ class ConfigProvider extends DataObject
      *
      * @return array
      */
-    protected function getConfigPaths() : array
+    private function getConfigPaths() : array
     {
         $configPaths = [];
 
-        // Check if global path has been defined, and add to config array
-        if (defined('HAPPYUTILITIES_CONFIG_PATH')) {
-            $configPaths[] = HAPPYUTILITIES_CONFIG_PATH;
-        }
+        // Default config path
+        $configPaths[] = __DIR__ . '/../../config';
 
         // Merge any additional paths
         $configPaths = array_merge($configPaths, $this->additionalConfigPaths);
-        // Default config path
-        $configPaths[] = __DIR__ . '/../../config';
+
+        // Check if global path has been defined, and add to config array
+        if (defined('ROOT_CONFIG_PATH')) {
+            $configPaths[] = ROOT_CONFIG_PATH;
+        }
 
         // Sanitise config paths and append extension
         return array_map(function (string $path) {

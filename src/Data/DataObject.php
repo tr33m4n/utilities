@@ -1,11 +1,11 @@
 <?php
 
-namespace tr33m4n\HappyUtilities\Data;
+namespace tr33m4n\Utilities\Data;
 
 /**
  * Class DataObject
  *
- * @package tr33m4n\HappyUtilities\Data
+ * @package tr33m4n\Utilities\Data
  */
 class DataObject implements DataObjectInterface
 {

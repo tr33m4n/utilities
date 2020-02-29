@@ -1,9 +1,9 @@
 <?php
 
-namespace DanielDoyle\HappyUtilities\Tests;
+namespace tr33m4n\Utilities\Tests\Data;
 
 use PHPUnit\Framework\TestCase;
-use DanielDoyle\HappyUtilities\Data\DataObject;
+use tr33m4n\Utilities\Data\DataObject;
 
 /**
  * DataObjectTest class
@@ -11,7 +11,7 @@ use DanielDoyle\HappyUtilities\Data\DataObject;
 final class DataObjectTest extends TestCase
 {
     /**
-     * @var \DanielDoyle\HappyUtilities\Data\DataObject
+     * @var \tr33m4n\Utilities\Data\DataObject
      */
     private $dataObject;
 

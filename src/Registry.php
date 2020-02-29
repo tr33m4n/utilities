@@ -1,14 +1,14 @@
 <?php
 
-namespace tr33m4n\HappyUtilities;
+namespace tr33m4n\Utilities;
 
-use tr33m4n\HappyUtilities\Exception\RegistryException;
-use tr33m4n\HappyUtilities\Config\ConfigProvider;
+use tr33m4n\Utilities\Exception\RegistryException;
+use tr33m4n\Utilities\Config\ConfigProvider;
 
 /**
  * Class Registry
  *
- * @package tr33m4n\HappyUtilities
+ * @package tr33m4n\Utilities
  */
 class Registry
 {
@@ -38,7 +38,7 @@ class Registry
      *
      * @param mixed $key   Key to set
      * @param mixed $value Value to set
-     * @throws \tr33m4n\HappyUtilities\Exception\RegistryException
+     * @throws \tr33m4n\Utilities\Exception\RegistryException
      */
     public static function set($key, $value)
     {
@@ -64,7 +64,7 @@ class Registry
      * Set config provider
      *
      * @throws RegistryException
-     * @param \tr33m4n\HappyUtilities\Config\ConfigProvider $configProvider
+     * @param \tr33m4n\Utilities\Config\ConfigProvider $configProvider
      */
     public static function setConfigProvider(ConfigProvider $configProvider)
     {
@@ -74,8 +74,8 @@ class Registry
     /**
      * Get config provider
      *
-     * @throws \tr33m4n\HappyUtilities\Exception\RegistryException
-     * @return \tr33m4n\HappyUtilities\Config\ConfigProvider
+     * @throws \tr33m4n\Utilities\Exception\RegistryException
+     * @return \tr33m4n\Utilities\Config\ConfigProvider
      */
     public static function getConfigProvider() : ConfigProvider
     {

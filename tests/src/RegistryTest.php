@@ -1,10 +1,10 @@
 <?php
 
-namespace DanielDoyle\HappyUtilities\Tests;
+namespace tr33m4n\Utilities\Tests;
 
 use PHPUnit\Framework\TestCase;
-use DanielDoyle\HappyUtilities\Registry;
-use DanielDoyle\HappyUtilities\Exception\RegistryException;
+use tr33m4n\Utilities\Registry;
+use tr33m4n\Utilities\Exception\RegistryException;
 
 /**
  * RegistryTest class

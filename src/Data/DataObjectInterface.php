@@ -1,13 +1,13 @@
 <?php
 
-namespace tr33m4n\HappyUtilities\Data;
+namespace tr33m4n\Utilities\Data;
 
 use IteratorAggregate;
 
 /**
  * Interface DataObjectInterface
  *
- * @package tr33m4n\HappyUtilities\Data
+ * @package tr33m4n\Utilities\Data
  */
 interface DataObjectInterface extends IteratorAggregate
 {
@@ -16,7 +16,7 @@ interface DataObjectInterface extends IteratorAggregate
      *
      * @param string $key   Data key
      * @param mixed  $value Data value
-     * @return \tr33m4n\HappyUtilities\Data\DataObjectInterface
+     * @return \tr33m4n\Utilities\Data\DataObjectInterface
      */
     public function set(string $key, $value);
 
@@ -40,7 +40,7 @@ interface DataObjectInterface extends IteratorAggregate
      * Atomically set data array
      *
      * @param array $dataArray Data array
-     * @return \tr33m4n\HappyUtilities\Data\DataObjectInterface
+     * @return \tr33m4n\Utilities\Data\DataObjectInterface
      */
     public function setAll(array $dataArray);
 

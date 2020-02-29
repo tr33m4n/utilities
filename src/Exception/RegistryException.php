@@ -1,11 +1,11 @@
 <?php
 
-namespace tr33m4n\HappyUtilities\Exception;
+namespace tr33m4n\Utilities\Exception;
 
 /**
  * Class RegistryException
  *
- * @package tr33m4n\HappyUtilities\Exception
+ * @package tr33m4n\Utilities\Exception
  */
 class RegistryException extends \Exception
 {
