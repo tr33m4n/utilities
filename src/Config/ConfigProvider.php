@@ -1,14 +1,14 @@
 <?php
 
-namespace DanielDoyle\HappyUtilities\Config;
+namespace tr33m4n\HappyUtilities\Config;
 
-use DanielDoyle\HappyUtilities\Exception\MissingConfigException;
-use DanielDoyle\HappyUtilities\Data\DataObject;
+use tr33m4n\HappyUtilities\Exception\MissingConfigException;
+use tr33m4n\HappyUtilities\Data\DataObject;
 
 /**
  * Class ConfigProvider
  *
- * @package DanielDoyle\HappyUtilities\Config
+ * @package tr33m4n\HappyUtilities\Config
  */
 class ConfigProvider extends DataObject
 {
@@ -40,10 +40,10 @@ class ConfigProvider extends DataObject
     /**
      * Set config
      *
-     * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
+     * @throws \tr33m4n\HappyUtilities\Exception\MissingConfigException
      * @return void
      */
-    protected function initConfig()
+    private function initConfig()
     {
         $distinctConfigFiles = [];
         foreach ($this->getConfigPaths() as $configPath) {

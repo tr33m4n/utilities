@@ -1,18 +1,18 @@
 <?php
 
-namespace DanielDoyle\HappyUtilities\Data;
+namespace tr33m4n\HappyUtilities\Data;
 
 /**
  * Class DataObject
  *
- * @package DanielDoyle\HappyUtilities\Data
+ * @package tr33m4n\HappyUtilities\Data
  */
 class DataObject implements DataObjectInterface
 {
     /**
      * @var array
      */
-    protected $data = [];
+    private $data = [];
 
     /**
      * DataObject constructor.

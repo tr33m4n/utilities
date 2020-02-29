@@ -1,13 +1,13 @@
 <?php
 
-namespace DanielDoyle\HappyUtilities\Config;
+namespace tr33m4n\HappyUtilities\Config;
 
-use DanielDoyle\HappyUtilities\Data\DataObject;
+use tr33m4n\HappyUtilities\Data\DataObject;
 
 /**
  * Class ConfigItem
  *
- * @package DanielDoyle\HappyUtilities\Config
+ * @package tr33m4n\HappyUtilities\Config
  */
 class ConfigItem extends DataObject
 {

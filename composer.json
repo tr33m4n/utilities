@@ -1,5 +1,5 @@
 {
-    "name": "danieldoyle/happy-utilities",
+    "name": "tr33m4n/happy-utilities",
     "description": "A very happy utility collection",
     "authors": [
         {
@@ -7,18 +7,12 @@
             "email": "tr33m4n@googlemail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://satis.daniel-doyle.co.uk"
-        }
-    ],
     "autoload": {
         "files": [
             "helpers/config.php"
         ],
         "psr-4": {
-            "DanielDoyle\\HappyUtilities\\": "src/"
+            "tr33m4n\\HappyUtilities\\": "src/"
         }
     },
     "require": {},
