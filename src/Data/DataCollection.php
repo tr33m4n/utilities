@@ -60,7 +60,7 @@ class DataCollection implements DataCollectionInterface
     public function get(string $key)
     {
         if (!$this->has($key)) {
-            return false;
+            return null;
         }
 
         return $this->data[$key];

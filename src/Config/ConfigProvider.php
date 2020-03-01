@@ -64,12 +64,8 @@ class ConfigProvider extends DataCollection
             array_reduce(
                 $this->getConfigPaths(),
                 function (array $initConfigFiles, string $rootConfigPath) {
-                    if (($configFiles = glob($rootConfigPath)) === false) {
-                        throw new MissingConfigException('An error occurred whilst iterating the config paths!');
-                    }
-
                     return $initConfigFiles = array_reduce(
-                        $configFiles,
+                        glob($rootConfigPath) ?: [],
                         function (array $initConfigFiles, string $configFilePath) {
                             $initConfigFiles[basename($configFilePath, '.' . $this->fileAdapter::getFileExtension())] =
                                 ConfigCollection::from($this->fileAdapter->read($configFilePath));
