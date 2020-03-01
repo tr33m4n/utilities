@@ -21,9 +21,7 @@ class DataCollection implements DataCollectionInterface
      */
     public function __construct(array $dataArray = [])
     {
-        if (!empty($dataArray)) {
-            $this->setAll($dataArray);
-        }
+        $this->setAll($dataArray);
     }
 
     /**
@@ -59,11 +57,7 @@ class DataCollection implements DataCollectionInterface
      */
     public function get(string $key)
     {
-        if (!$this->has($key)) {
-            return null;
-        }
-
-        return $this->data[$key];
+        return $this->has($key) ? $this->data[$key] : null;
     }
 
     /**
@@ -102,15 +96,9 @@ class DataCollection implements DataCollectionInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return mixed
      */
     public function getIterator()
     {
-        return (function () {
-            foreach ($this->data as $key => $value) {
-                yield $key => $value;
-            }
-        })();
+        yield from $this->data;
     }
 }
