@@ -103,7 +103,9 @@ $deepValue = $this->configProvider->get('test1')
     ->get('test3')
     ->get('test3')
     ->get('test2')
-    ->get('deep_value');
+    ->get('test1');
+
+// $deepValue = 'deep_value'
 ```
 For convenience a global helper function `config` is also provided which allows access to a single instance of the config provider (set in the registry). Accessing the `deep_value` using this would look like:
 ```php
@@ -112,5 +114,7 @@ For convenience a global helper function `config` is also provided which allows 
 $deepValue = config('test1')->get('test3')
     ->get('test3')
     ->get('test2')
-    ->get('deep_value');
+    ->get('test1');
+
+// $deepValue = 'deep_value'
 ```
