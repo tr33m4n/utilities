@@ -51,7 +51,7 @@ class DataCollection implements DataCollectionInterface
      */
     public function get(string $key)
     {
-        return $this->has($key) ? $this->data[$key] : null;
+        return $this->data[$key] ?? null;
     }
 
     /**
@@ -66,7 +66,7 @@ class DataCollection implements DataCollectionInterface
      * {@inheritdoc}
      *
      * @param array<string, mixed> $dataArray
-     * @return \tr33m4n\Utilities\Data\DataCollectionInterface<int|string, mixed>
+     * @return \tr33m4n\Utilities\Data\DataCollectionInterface<string, mixed>
      */
     public function setAll(array $dataArray): DataCollectionInterface
     {
@@ -86,7 +86,7 @@ class DataCollection implements DataCollectionInterface
     /**
      * {@inheritdoc}
      *
-     * @return \Iterator<int|string, mixed>
+     * @return \Iterator<string, mixed>
      */
     public function getIterator(): Iterator
     {

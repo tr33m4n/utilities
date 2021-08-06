@@ -48,6 +48,7 @@ final class ConfigProviderTest extends TestCase
      * Test that the config provider initialises correctly
      *
      * @test
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @return void
      */
     public function assertConfigProviderInitialisesCorrectly() : void
@@ -60,6 +61,7 @@ final class ConfigProviderTest extends TestCase
      * Test that we can access a deeply nested config value
      *
      * @test
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @return void
      */
     public function assertNestedValuesAreAccessible() : void

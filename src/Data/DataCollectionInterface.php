@@ -9,7 +9,7 @@ use IteratorAggregate;
 /**
  * Interface DataCollectionInterface
  *
- * @extends IteratorAggregate<int|string, mixed>
+ * @extends IteratorAggregate<string, mixed>
  * @package tr33m4n\Utilities\Data
  */
 interface DataCollectionInterface extends IteratorAggregate
@@ -27,7 +27,7 @@ interface DataCollectionInterface extends IteratorAggregate
      *
      * @param string $key   Data key
      * @param mixed  $value Data value
-     * @return \tr33m4n\Utilities\Data\DataCollectionInterface<int|string, mixed>
+     * @return \tr33m4n\Utilities\Data\DataCollectionInterface<string, mixed>
      */
     public function set(string $key, $value): DataCollectionInterface;
 
@@ -51,7 +51,7 @@ interface DataCollectionInterface extends IteratorAggregate
      * Atomically set data array
      *
      * @param array<string, mixed> $dataArray Data array
-     * @return \tr33m4n\Utilities\Data\DataCollectionInterface<int|string, mixed>
+     * @return \tr33m4n\Utilities\Data\DataCollectionInterface<string, mixed>
      */
     public function setAll(array $dataArray): DataCollectionInterface;
 
