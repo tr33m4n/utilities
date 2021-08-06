@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace tr33m4n\Utilities\Data;
+
+use Iterator;
 
 /**
  * Class DataCollection
@@ -10,14 +14,14 @@ namespace tr33m4n\Utilities\Data;
 class DataCollection implements DataCollectionInterface
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $data = [];
 
     /**
      * DataCollection constructor.
      *
-     * @param array $dataArray Atomically add data on construct
+     * @param array<string, mixed> $dataArray Atomically add data on construct
      */
     public function __construct(array $dataArray = [])
     {
@@ -25,24 +29,17 @@ class DataCollection implements DataCollectionInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @param array $dataArray Atomically add data on construct
-     * @return \tr33m4n\Utilities\Data\DataCollectionInterface
+     * @inheritDoc
      */
-    public static function from(array $dataArray = []) : DataCollectionInterface
+    public static function from(array $dataArray = []): DataCollectionInterface
     {
         return new self($dataArray);
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @param string $key   Data key
-     * @param mixed  $value Data value
-     * @return $this
+     * @inheritDoc
      */
-    public function set(string $key, $value) : DataCollectionInterface
+    public function set(string $key, $value): DataCollectionInterface
     {
         $this->data[$key] = $value;
 
@@ -50,10 +47,7 @@ class DataCollection implements DataCollectionInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @param string $key Data to return by key
-     * @return mixed
+     * @inheritDoc
      */
     public function get(string $key)
     {
@@ -61,12 +55,9 @@ class DataCollection implements DataCollectionInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @param string $key Key to check
-     * @return bool
+     * @inheritDoc
      */
-    public function has(string $key) : bool
+    public function has(string $key): bool
     {
         return isset($this->data[$key]);
     }
@@ -74,10 +65,10 @@ class DataCollection implements DataCollectionInterface
     /**
      * {@inheritdoc}
      *
-     * @param array $dataArray Data array
-     * @return $this
+     * @param array<string, mixed> $dataArray
+     * @return \tr33m4n\Utilities\Data\DataCollectionInterface<int|string, mixed>
      */
-    public function setAll(array $dataArray) : DataCollectionInterface
+    public function setAll(array $dataArray): DataCollectionInterface
     {
         $this->data = $dataArray;
 
@@ -85,19 +76,19 @@ class DataCollection implements DataCollectionInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return array
+     * @inheritDoc
      */
-    public function getAll() : array
+    public function getAll(): array
     {
         return $this->data;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @return \Iterator<int|string, mixed>
      */
-    public function getIterator()
+    public function getIterator(): Iterator
     {
         yield from $this->data;
     }

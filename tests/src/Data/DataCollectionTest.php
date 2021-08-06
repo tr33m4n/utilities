@@ -53,10 +53,10 @@ final class DataCollectionTest extends TestCase
      * @test
      * @dataProvider getDataProvider
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      * @return void
      */
-    public function assertGetReturnsExpectedValue($key, $value) : void
+    public function assertGetReturnsExpectedValue(string $key, $value) : void
     {
         $this->dataCollection->set($key, $value);
         $this->assertEquals($this->dataCollection->get($key), $value);
@@ -69,10 +69,10 @@ final class DataCollectionTest extends TestCase
      * @dataProvider hasDataProvider
      * @param mixed $key
      * @param mixed $value
-     * @param bool $expected
+     * @param bool  $expected
      * @return void
      */
-    public function assertHasReturnsExpectedValue($key, $value, $expected) : void
+    public function assertHasReturnsExpectedValue($key, $value, bool $expected) : void
     {
         $this->dataCollection->set($key, $value);
         $this->assertEquals($this->dataCollection->has($key), $expected);

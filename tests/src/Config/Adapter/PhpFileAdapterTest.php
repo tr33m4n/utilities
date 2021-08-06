@@ -36,7 +36,7 @@ class PhpFileAdapterTest extends TestCase
      */
     public function assertAdapterHasTheRightFileExtension() : void
     {
-        $this->assertEquals($this->phpFileAdapter::getFileExtension(), 'php');
+        $this->assertEquals('php', $this->phpFileAdapter::getFileExtension());
     }
 
     /**

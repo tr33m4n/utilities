@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace tr33m4n\Utilities\Config;
 
 use tr33m4n\Utilities\Config\Adapter\FileAdapterInterface;
 use tr33m4n\Utilities\Config\Adapter\PhpFileAdapter;
 use tr33m4n\Utilities\Data\DataCollection;
-use tr33m4n\Utilities\Data\DataCollectionInterface;
-use tr33m4n\Utilities\Exception\MissingConfigException;
 
 /**
  * Class ConfigProvider
@@ -16,7 +16,7 @@ use tr33m4n\Utilities\Exception\MissingConfigException;
 class ConfigProvider extends DataCollection
 {
     /**
-     * @var array
+     * @var string[]
      */
     private $configPaths;
 
@@ -28,8 +28,9 @@ class ConfigProvider extends DataCollection
     /**
      * ConfigProvider constructor.
      *
-     * @param array                                                       $configPaths
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @param \tr33m4n\Utilities\Config\Adapter\FileAdapterInterface|null $fileAdapter
+     * @param string[]                                                    $configPaths
      */
     public function __construct(
         array $configPaths = [],
@@ -38,35 +39,25 @@ class ConfigProvider extends DataCollection
         parent::__construct();
 
         $this->configPaths = $configPaths;
-        $this->fileAdapter = $fileAdapter ?: new PhpFileAdapter();
+        $this->fileAdapter = $fileAdapter ?? new PhpFileAdapter();
         $this->initConfig();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @param array $configPaths Atomically add data on construct
-     * @return \tr33m4n\Utilities\Data\DataCollectionInterface
-     */
-    public static function from(array $configPaths = []) : DataCollectionInterface
-    {
-        return new self($configPaths);
     }
 
     /**
      * Set config
      *
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @return void
      */
-    private function initConfig() : void
+    private function initConfig(): void
     {
         $this->setAll(
             array_reduce(
                 $this->getConfigPaths(),
-                function (array $initConfigFiles, string $rootConfigPath) {
+                function (array $initConfigFiles, string $rootConfigPath): array {
                     return $initConfigFiles = array_reduce(
                         glob($rootConfigPath) ?: [],
-                        function (array $initConfigFiles, string $configFilePath) {
+                        function (array $initConfigFiles, string $configFilePath): array {
                             $initConfigFiles[basename($configFilePath, '.' . $this->fileAdapter::getFileExtension())] =
                                 ConfigCollection::from($this->fileAdapter->read($configFilePath));
 
@@ -86,9 +77,9 @@ class ConfigProvider extends DataCollection
      * 1. Global path
      * 2. Additional paths passed to the constructor
      *
-     * @return array
+     * @return string[]
      */
-    private function getConfigPaths() : array
+    private function getConfigPaths(): array
     {
         // Check if global path has been defined, and add to path array
         if (defined('ROOT_CONFIG_PATH')) {
@@ -96,7 +87,7 @@ class ConfigProvider extends DataCollection
         }
 
         // Sanitise config paths and append extension
-        return array_map(function (string $path) {
+        return array_map(function (string $path): string {
             return rtrim($path, DIRECTORY_SEPARATOR)
                 . DIRECTORY_SEPARATOR
                 . '*'
