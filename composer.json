@@ -18,7 +18,8 @@
             "helpers/config.php"
         ],
         "psr-4": {
-            "tr33m4n\\Utilities\\": "src/"
+            "tr33m4n\\Utilities\\": "src/",
+            "tr33m4n\\Utilities\\Tests\\": "tests/"
         }
     },
     "require": {

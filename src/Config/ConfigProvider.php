@@ -7,6 +7,7 @@ namespace tr33m4n\Utilities\Config;
 use tr33m4n\Utilities\Config\Adapter\FileAdapterInterface;
 use tr33m4n\Utilities\Config\Adapter\PhpFileAdapter;
 use tr33m4n\Utilities\Data\DataCollection;
+use tr33m4n\Utilities\Data\DataCollectionInterface;
 
 /**
  * Class ConfigProvider
@@ -40,59 +41,107 @@ class ConfigProvider extends DataCollection
 
         $this->configPaths = $configPaths;
         $this->fileAdapter = $fileAdapter ?? new PhpFileAdapter();
+
         $this->initConfig();
     }
 
     /**
-     * Set config
+     * {@inheritdoc}
+     *
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
+     * @param string[] $dataArray
+     * @return \tr33m4n\Utilities\Data\DataCollectionInterface
+     */
+    public static function from(array $dataArray = []): DataCollectionInterface
+    {
+        return new self($dataArray);
+    }
+
+    /**
+     * Add config paths
+     *
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
+     * @param string[] $configPaths
+     * @return \tr33m4n\Utilities\Config\ConfigProvider
+     */
+    public function addConfigPaths(array $configPaths): ConfigProvider
+    {
+        $this->add($this->processConfigPaths($configPaths));
+
+        return $this;
+    }
+
+    /**
+     * Process config path
+     *
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
+     * @param string $configPath
+     * @return array<string, \tr33m4n\Utilities\Config\ConfigCollection>
+     */
+    private function processConfigPath(string $configPath): array
+    {
+        return array_reduce(
+            glob(
+                rtrim($configPath, DIRECTORY_SEPARATOR) // Sanitise config paths and append extension
+                    . DIRECTORY_SEPARATOR
+                    . '*'
+                    . '.'
+                    . $this->fileAdapter::getFileExtension()
+            ) ?: [],
+            function (array $configFiles, string $configFilePath): array {
+                $configFiles[basename($configFilePath, '.' . $this->fileAdapter::getFileExtension())] =
+                    ConfigCollection::from($this->fileAdapter->read($configFilePath));
+
+                return $configFiles;
+            },
+            []
+        );
+    }
+
+    /**
+     * Process config paths
+     *
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
+     * @param string[] $configPaths
+     * @return array<string, \tr33m4n\Utilities\Config\ConfigCollection>
+     */
+    private function processConfigPaths(array $configPaths): array
+    {
+        return array_reduce(
+            $configPaths,
+            function (array $configPaths, string $configPath): array {
+                return $configPaths = array_merge($configPaths, $this->processConfigPath($configPath));
+            },
+            []
+        );
+    }
+
+    /**
+     * Init config
      *
      * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @return void
      */
     private function initConfig(): void
     {
-        $this->setAll(
-            array_reduce(
-                $this->getConfigPaths(),
-                function (array $initConfigFiles, string $rootConfigPath): array {
-                    return $initConfigFiles = array_reduce(
-                        glob($rootConfigPath) ?: [],
-                        function (array $initConfigFiles, string $configFilePath): array {
-                            $initConfigFiles[basename($configFilePath, '.' . $this->fileAdapter::getFileExtension())] =
-                                ConfigCollection::from($this->fileAdapter->read($configFilePath));
-
-                            return $initConfigFiles;
-                        },
-                        $initConfigFiles
-                    );
-                },
-                []
-            )
-        );
+        $this->setAll($this->processConfigPaths($this->initConfigPaths()));
     }
 
     /**
-     * Get config paths. Config preference is in the order of:
+     * Init config paths. Config preference is in the order of:
      *
      * 1. Global path
      * 2. Additional paths passed to the constructor
      *
      * @return string[]
      */
-    private function getConfigPaths(): array
+    private function initConfigPaths(): array
     {
         // Check if global path has been defined, and add to path array
         if (defined('ROOT_CONFIG_PATH')) {
             $this->configPaths[] = ROOT_CONFIG_PATH;
         }
 
-        // Sanitise config paths and append extension
-        return array_map(function (string $path): string {
-            return rtrim($path, DIRECTORY_SEPARATOR)
-                . DIRECTORY_SEPARATOR
-                . '*'
-                . '.'
-                . $this->fileAdapter::getFileExtension();
-        }, $this->configPaths);
+        return $this->configPaths;
     }
 }

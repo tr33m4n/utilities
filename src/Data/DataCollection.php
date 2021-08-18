@@ -57,6 +57,18 @@ class DataCollection implements DataCollectionInterface
     /**
      * @inheritDoc
      */
+    public function add(array $keyValuePairs): DataCollectionInterface
+    {
+        foreach ($keyValuePairs as $key => $value) {
+            $this->set($key, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function has(string $key): bool
     {
         return isset($this->data[$key]);

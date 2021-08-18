@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace tr33m4n\Utilities\Config;
 
 use tr33m4n\Utilities\Data\DataCollection;
+use tr33m4n\Utilities\Data\DataCollectionInterface;
 
 /**
  * Class ConfigCollection
@@ -24,5 +25,13 @@ class ConfigCollection extends DataCollection
             // Iterate config array and populate with new collection if is an array
             return is_array($configValue) ? self::from($configValue) : $configValue;
         }, $configArray));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function from(array $dataArray = []): DataCollectionInterface
+    {
+        return new self($dataArray);
     }
 }

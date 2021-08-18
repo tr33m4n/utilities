@@ -40,6 +40,14 @@ interface DataCollectionInterface extends IteratorAggregate
     public function get(string $key);
 
     /**
+     * Add key value pairs
+     *
+     * @param array<string, mixed> $keyValuePairs
+     * @return \tr33m4n\Utilities\Data\DataCollectionInterface
+     */
+    public function add(array $keyValuePairs): DataCollectionInterface;
+
+    /**
      * Check if key exists
      *
      * @param string $key Key to check

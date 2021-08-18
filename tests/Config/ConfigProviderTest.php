@@ -3,8 +3,9 @@
 namespace tr33m4n\Utilities\Tests\Config;
 
 use PHPUnit\Framework\TestCase;
-use tr33m4n\Utilities\Config\ConfigProvider;
 use tr33m4n\Utilities\Config\ConfigCollection;
+use tr33m4n\Utilities\Config\ConfigProvider;
+use tr33m4n\Utilities\Config\Container;
 
 /**
  * Class ConfigProviderTest
@@ -13,9 +14,9 @@ use tr33m4n\Utilities\Config\ConfigCollection;
  */
 final class ConfigProviderTest extends TestCase
 {
-    const CONFIG_PATHS = [
-        __DIR__ . '/../../fixtures/config',
-        __DIR__ . '/../../fixtures/config_override' // Add path to test overriding config files
+    private const CONFIG_PATHS = [
+        __DIR__ . '/../fixtures/config',
+        __DIR__ . '/../fixtures/config_override' // Add path to test overriding config files
     ];
 
     /**
@@ -28,18 +29,19 @@ final class ConfigProviderTest extends TestCase
      *
      * @return void
      */
-    public function setUp() : void
+    public function setUp(): void
     {
-        $this->configProvider = new ConfigProvider(self::CONFIG_PATHS);
+        $this->configProvider = Container::setConfigProvider(new ConfigProvider(self::CONFIG_PATHS));
     }
 
     /**
      * Test that the config provider can be created statically
      *
      * @test
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @return void
      */
-    public function assertConfigProviderCanBeCreatedStatically() : void
+    public function assertConfigProviderCanBeCreatedStatically(): void
     {
         $this->assertEquals(ConfigProvider::from(self::CONFIG_PATHS), $this->configProvider);
     }
@@ -51,7 +53,7 @@ final class ConfigProviderTest extends TestCase
      * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @return void
      */
-    public function assertConfigProviderInitialisesCorrectly() : void
+    public function assertConfigProviderInitialisesCorrectly(): void
     {
         $this->assertEquals($this->configProvider->getAll(), $this->expectedConfigStructure());
         $this->assertEquals(config()->getAll(), $this->expectedConfigStructure());
@@ -64,7 +66,7 @@ final class ConfigProviderTest extends TestCase
      * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @return void
      */
-    public function assertNestedValuesAreAccessible() : void
+    public function assertNestedValuesAreAccessible(): void
     {
         $this->assertEquals(
             'test1',
@@ -81,7 +83,7 @@ final class ConfigProviderTest extends TestCase
      *
      * @return array
      */
-    private function expectedConfigStructure() : array
+    private function expectedConfigStructure(): array
     {
         return [
             'test1' => ConfigCollection::from([

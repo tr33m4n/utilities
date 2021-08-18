@@ -3,6 +3,7 @@
 use Rector\Core\Configuration\Option;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
+use Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector;
 use Rector\Set\ValueObject\SetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -19,6 +20,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::PATHS, [__DIR__ . '/src']);
     $parameters->set(Option::SKIP, [
         RemoveUselessParamTagRector::class,
-        RemoveUselessReturnTagRector::class
+        RemoveUselessReturnTagRector::class,
+        ReturnTypeDeclarationRector::class
     ]);
 };
