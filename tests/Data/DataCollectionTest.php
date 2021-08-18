@@ -105,7 +105,7 @@ final class DataCollectionTest extends TestCase
 
     /**
      * Assert that the data collection can be iterated
-     *     * @test
+     * @test
      * @return void
      */
     public function assertDataCollectionCanBeIterated(): void
