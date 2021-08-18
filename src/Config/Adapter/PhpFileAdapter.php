@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace tr33m4n\Utilities\Config\Adapter;
 
 use tr33m4n\Utilities\Exception\AdapterException;
@@ -11,19 +13,12 @@ use tr33m4n\Utilities\Exception\AdapterException;
  */
 final class PhpFileAdapter implements FileAdapterInterface
 {
-    /**
-     * PHP file extension
-     */
-    const FILE_EXTENSION = 'php';
+    public const FILE_EXTENSION = 'php';
 
     /**
-     * {@inheritdoc}
-     *
-     * @throws \tr33m4n\Utilities\Exception\AdapterException
-     * @param string $filePath
-     * @return array
+     * @inheritDoc
      */
-    public function read(string $filePath) : array
+    public function read(string $filePath): array
     {
         if (!$this->validate($filePath)) {
             throw new AdapterException(sprintf('File type is invalid %s', $filePath));
@@ -38,22 +33,17 @@ final class PhpFileAdapter implements FileAdapterInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @param string $filePath
-     * @return bool
+     * @inheritDoc
      */
-    public function validate(string $filePath) : bool
+    public function validate(string $filePath): bool
     {
         return file_exists($filePath) && pathinfo($filePath, PATHINFO_EXTENSION) === self::FILE_EXTENSION;
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return string
+     * @inheritDoc
      */
-    public static function getFileExtension() : string
+    public static function getFileExtension(): string
     {
         return self::FILE_EXTENSION;
     }

@@ -20,7 +20,7 @@ final class DataCollectionTest extends TestCase
      *
      * @return void
      */
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->dataCollection = new DataCollection();
     }
@@ -31,7 +31,7 @@ final class DataCollectionTest extends TestCase
      * @test
      * @return void
      */
-    public function assertDataCollectionCanBeCreatedStatically() : void
+    public function assertDataCollectionCanBeCreatedStatically(): void
     {
         $this->assertEquals(DataCollection::from(), $this->dataCollection);
     }
@@ -42,7 +42,7 @@ final class DataCollectionTest extends TestCase
      * @test
      * @return void
      */
-    public function assertSetReturnsExpectedValue() : void
+    public function assertSetReturnsExpectedValue(): void
     {
         $this->assertEquals($this->dataCollection->set('foo', 'bar'), $this->dataCollection);
     }
@@ -53,10 +53,10 @@ final class DataCollectionTest extends TestCase
      * @test
      * @dataProvider getDataProvider
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      * @return void
      */
-    public function assertGetReturnsExpectedValue($key, $value) : void
+    public function assertGetReturnsExpectedValue(string $key, $value): void
     {
         $this->dataCollection->set($key, $value);
         $this->assertEquals($this->dataCollection->get($key), $value);
@@ -69,10 +69,10 @@ final class DataCollectionTest extends TestCase
      * @dataProvider hasDataProvider
      * @param mixed $key
      * @param mixed $value
-     * @param bool $expected
+     * @param bool  $expected
      * @return void
      */
-    public function assertHasReturnsExpectedValue($key, $value, $expected) : void
+    public function assertHasReturnsExpectedValue($key, $value, bool $expected): void
     {
         $this->dataCollection->set($key, $value);
         $this->assertEquals($this->dataCollection->has($key), $expected);
@@ -84,7 +84,7 @@ final class DataCollectionTest extends TestCase
      * @test
      * @return void
      */
-    public function assertSetAllReturnsExpectedValue() : void
+    public function assertSetAllReturnsExpectedValue(): void
     {
         $this->assertEquals($this->dataCollection->setAll(['foo' => 'bar']), $this->dataCollection);
     }
@@ -95,7 +95,7 @@ final class DataCollectionTest extends TestCase
      * @test
      * @return void
      */
-    public function assertGetAllReturnsExpectedValue() : void
+    public function assertGetAllReturnsExpectedValue(): void
     {
         $testData = $this->getDataProviderAsKeyValuePairs();
 
@@ -105,11 +105,10 @@ final class DataCollectionTest extends TestCase
 
     /**
      * Assert that the data collection can be iterated
-     *
      * @test
      * @return void
      */
-    public function assertDataCollectionCanBeIterated() : void
+    public function assertDataCollectionCanBeIterated(): void
     {
         $testData = $this->getDataProviderAsKeyValuePairs();
         $this->dataCollection->setAll($testData);
@@ -127,7 +126,7 @@ final class DataCollectionTest extends TestCase
      *
      * @return array
      */
-    public function getDataProviderAsKeyValuePairs() : array
+    public function getDataProviderAsKeyValuePairs(): array
     {
         $testData = [];
         foreach ($this->getDataProvider() as $testArray) {
@@ -142,7 +141,7 @@ final class DataCollectionTest extends TestCase
      *
      * @return array
      */
-    public function hasDataProvider() : array
+    public function hasDataProvider(): array
     {
         return [
             ['test', 'test', true],
@@ -155,7 +154,7 @@ final class DataCollectionTest extends TestCase
      *
      * @return array
      */
-    public function getDataProvider() : array
+    public function getDataProvider(): array
     {
         return [
             ['testing', 'helloworld'],

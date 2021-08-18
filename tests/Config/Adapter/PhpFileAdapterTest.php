@@ -23,7 +23,7 @@ class PhpFileAdapterTest extends TestCase
      *
      * @return void
      */
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->phpFileAdapter = new PhpFileAdapter();
     }
@@ -34,9 +34,9 @@ class PhpFileAdapterTest extends TestCase
      * @test
      * @return void
      */
-    public function assertAdapterHasTheRightFileExtension() : void
+    public function assertAdapterHasTheRightFileExtension(): void
     {
-        $this->assertEquals($this->phpFileAdapter::getFileExtension(), 'php');
+        $this->assertEquals('php', $this->phpFileAdapter::getFileExtension());
     }
 
     /**
@@ -48,7 +48,7 @@ class PhpFileAdapterTest extends TestCase
      * @param bool   $expected
      * @return void
      */
-    public function assertValidationReturnsCorrectBoolean(string $filePath, bool $expected) : void
+    public function assertValidationReturnsCorrectBoolean(string $filePath, bool $expected): void
     {
         $this->assertEquals($this->phpFileAdapter->validate($filePath), $expected);
     }
@@ -63,7 +63,7 @@ class PhpFileAdapterTest extends TestCase
      * @param array  $expected
      * @return void
      */
-    public function assertAdapterCanReadPhpFile(string $filePath, array $expected) : void
+    public function assertAdapterCanReadPhpFile(string $filePath, array $expected): void
     {
         $this->assertEquals($this->phpFileAdapter->read($filePath), $expected);
     }
@@ -75,7 +75,7 @@ class PhpFileAdapterTest extends TestCase
      * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @return void
      */
-    public function assertAdapterThrowsExceptionIfFileIsInvalid() : void
+    public function assertAdapterThrowsExceptionIfFileIsInvalid(): void
     {
         $this->expectException(AdapterException::class);
         $this->phpFileAdapter->read('a/random/path/to/a/file.yml');
@@ -86,13 +86,13 @@ class PhpFileAdapterTest extends TestCase
      *
      * @return array
      */
-    public function validationDataProvider() : array
+    public function validationDataProvider(): array
     {
         return [
-            [__DIR__ . '/../../../fixtures/config/test1.php', true],
+            [__DIR__ . '/../../fixtures/config/test1.php', true],
             ['test/path/file', false],
             ['test/path/file.yml', false],
-            [__DIR__ . '/../../../fixtures/config/test2.php', true],
+            [__DIR__ . '/../../fixtures/config/test2.php', true],
             ['', false]
         ];
     }
@@ -102,11 +102,11 @@ class PhpFileAdapterTest extends TestCase
      *
      * @return array
      */
-    public function readDataProvider() : array
+    public function readDataProvider(): array
     {
         return [
             [
-                __DIR__ . '/../../../fixtures/config/test1.php',
+                __DIR__ . '/../../fixtures/config/test1.php',
                 [
                     'test1_1' => 'test1',
                     'test1_2' => 123,
@@ -126,7 +126,7 @@ class PhpFileAdapterTest extends TestCase
                 ]
             ],
             [
-                __DIR__ . '/../../../fixtures/config/test2.php',
+                __DIR__ . '/../../fixtures/config/test2.php',
                 [
                     'test2_1' => 'test1',
                     'test2_2' => 123,
@@ -146,7 +146,7 @@ class PhpFileAdapterTest extends TestCase
                 ]
             ],
             [
-                __DIR__ . '/../../../fixtures/config/test3.php',
+                __DIR__ . '/../../fixtures/config/test3.php',
                 [
                     'test3_1' => 'test1',
                     'test3_2' => 123,

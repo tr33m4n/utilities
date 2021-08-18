@@ -5,11 +5,11 @@ namespace tr33m4n\Utilities\Exception;
 use Exception;
 
 /**
- * Class RegistryException
+ * Class ContainerException
  *
  * @package tr33m4n\Utilities\Exception
  */
-class RegistryException extends Exception
+class ContainerException extends Exception
 {
     //
 }

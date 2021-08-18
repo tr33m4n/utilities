@@ -1,26 +1,28 @@
 <?php
 
-use tr33m4n\Utilities\Registry;
-use tr33m4n\Utilities\Exception\RegistryException;
+declare(strict_types=1);
+
 use tr33m4n\Utilities\Config\ConfigProvider;
+use tr33m4n\Utilities\Config\Container;
+use tr33m4n\Utilities\Exception\ContainerException;
 
 /**
  * Helper function for easily accessing the config provider
  *
- * @throws \tr33m4n\Utilities\Exception\RegistryException
- * @param array  $additionalConfigPaths Additional config paths
- * @param string $scope                 Scope config
- * @return \tr33m4n\Utilities\Config\ConfigProvider
+ * @throws \tr33m4n\Utilities\Exception\AdapterException
+ * @param string|null $scope                 Scope config
+ * @param string[]    $additionalConfigPaths Additional config paths
+ * @return \tr33m4n\Utilities\Config\ConfigProvider|mixed
  */
-function config(string $scope = '', array $additionalConfigPaths = [])
+function config(string $scope = null, array $additionalConfigPaths = [])
 {
     try {
-        $configProvider = Registry::getConfigProvider();
-    } catch (RegistryException $exception) {
-        $configProvider = new ConfigProvider($additionalConfigPaths);
-
-        Registry::setConfigProvider($configProvider);
+        $configProvider = Container::getConfigProvider();
+    } catch (ContainerException $containerException) {
+        $configProvider = Container::setConfigProvider(new ConfigProvider());
     }
 
-    return strlen($scope) ? $configProvider->get($scope) : $configProvider;
+    $configProvider->addConfigPaths($additionalConfigPaths);
+
+    return null !== $scope ? $configProvider->get($scope) : $configProvider;
 }

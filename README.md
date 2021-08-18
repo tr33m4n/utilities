@@ -1,20 +1,12 @@
 # utilities
 A basic set of utility classes for use in other modules.
 
-## `\tr33m4n\Utilities\Registry`
-A simple statically accessed registry class
-
-- `Registry::set` Set an item in the registry
-- `Registry::get` Get an item from the registry
-- `Registry::has` Check if an item exists in the registry
-- `Registry::setConfigProvider` A special case for globally setting a config provider
-- `Registry::getConfigProvider` A special case for getting a globally set config provider
-
 ## `\tr33m4n\Utilities\Data\DataCollection`
 A simple, iterable collection for storing data
 
 - `$dataCollection->set` Set an item to the data collection
 - `$dataCollection->get` Get an item from the data collection
+- `$dataCollection->add` Add a key value pair array to the data collection
 - `$dataCollection->has` Check if an item exists in the data collection
 - `$dataCollection->setAll` Bulk set items to the data collection
 - `$dataCollection->getAll` Get all items set against the data collection
