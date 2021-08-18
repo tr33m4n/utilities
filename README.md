@@ -6,6 +6,7 @@ A simple, iterable collection for storing data
 
 - `$dataCollection->set` Set an item to the data collection
 - `$dataCollection->get` Get an item from the data collection
+- `$dataCollection->add` Add a key value pair array to the data collection
 - `$dataCollection->has` Check if an item exists in the data collection
 - `$dataCollection->setAll` Bulk set items to the data collection
 - `$dataCollection->getAll` Get all items set against the data collection
