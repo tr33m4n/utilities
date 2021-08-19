@@ -19,9 +19,7 @@ class PhpFileAdapterTest extends TestCase
     private $phpFileAdapter;
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritDoc
      */
     public function setUp(): void
     {

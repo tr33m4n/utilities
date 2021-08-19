@@ -6,6 +6,7 @@ namespace tr33m4n\Utilities\Config;
 
 use tr33m4n\Utilities\Data\DataCollection;
 use tr33m4n\Utilities\Data\DataCollectionInterface;
+use tr33m4n\Utilities\Exception\ConfigException;
 
 /**
  * Class ConfigCollection
@@ -33,5 +34,21 @@ class ConfigCollection extends DataCollection
     public static function from(array $dataArray = []): DataCollectionInterface
     {
         return new self($dataArray);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \tr33m4n\Utilities\Exception\ConfigException
+     * @param string $key
+     * @return mixed|null
+     */
+    public function get(string $key)
+    {
+        if (!$this->has($key)) {
+            throw new ConfigException(sprintf('Config key "%s" does not exist', $key));
+        }
+
+        return parent::get($key);
     }
 }

@@ -7,11 +7,11 @@ namespace tr33m4n\Utilities\Exception;
 use Exception;
 
 /**
- * Class AdapterException
+ * Class ConfigException
  *
  * @package tr33m4n\Utilities\Exception
  */
-class AdapterException extends Exception
+class ConfigException extends Exception
 {
     //
 }

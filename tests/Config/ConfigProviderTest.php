@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace tr33m4n\Utilities\Tests\Config;
 
 use PHPUnit\Framework\TestCase;
@@ -25,9 +27,7 @@ final class ConfigProviderTest extends TestCase
     private $configProvider;
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritDoc
      */
     public function setUp(): void
     {

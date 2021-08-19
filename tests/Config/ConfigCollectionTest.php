@@ -2,38 +2,36 @@
 
 declare(strict_types=1);
 
-namespace tr33m4n\Utilities\Tests\Data;
+namespace tr33m4n\Utilities\Tests\Config;
 
 use PHPUnit\Framework\TestCase;
-use tr33m4n\Utilities\Data\DataCollection;
+use tr33m4n\Utilities\Config\ConfigCollection;
+use tr33m4n\Utilities\Exception\ConfigException;
 
-/**
- * DataCollectionTest class
- */
-final class DataCollectionTest extends TestCase
+final class ConfigCollectionTest extends TestCase
 {
     /**
-     * @var \tr33m4n\Utilities\Data\DataCollection
+     * @var \tr33m4n\Utilities\Config\ConfigCollection
      */
-    private $dataCollection;
+    private $configCollection;
 
     /**
      * @inheritDoc
      */
     public function setUp(): void
     {
-        $this->dataCollection = new DataCollection();
+        $this->configCollection = new ConfigCollection();
     }
 
     /**
-     * Test that the data collection can be created statically
+     * Test that the config collection can be created statically
      *
      * @test
      * @return void
      */
     public function assertDataCollectionCanBeCreatedStatically(): void
     {
-        $this->assertEquals(DataCollection::from(), $this->dataCollection);
+        $this->assertEquals(ConfigCollection::from(), $this->configCollection);
     }
 
     /**
@@ -44,7 +42,7 @@ final class DataCollectionTest extends TestCase
      */
     public function assertSetReturnsExpectedValue(): void
     {
-        $this->assertEquals($this->dataCollection->set('foo', 'bar'), $this->dataCollection);
+        $this->assertEquals($this->configCollection->set('foo', 'bar'), $this->configCollection);
     }
 
     /**
@@ -52,14 +50,28 @@ final class DataCollectionTest extends TestCase
      *
      * @test
      * @dataProvider getDataProvider
+     * @throws \tr33m4n\Utilities\Exception\ConfigException
      * @param string $key
      * @param mixed  $value
      * @return void
      */
     public function assertGetReturnsExpectedValue(string $key, $value): void
     {
-        $this->dataCollection->set($key, $value);
-        $this->assertEquals($this->dataCollection->get($key), $value);
+        $this->configCollection->set($key, $value);
+        $this->assertEquals($this->configCollection->get($key), $value);
+    }
+
+    /**
+     * Assert exception is thrown when "getting" a value that does not exist
+     *
+     * @test
+     */
+    public function assertGetThrowsExceptionWhenKeyIsMissing(): void
+    {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('Config key "missing" does not exist');
+
+        $this->configCollection->get('missing');
     }
 
     /**
@@ -74,8 +86,8 @@ final class DataCollectionTest extends TestCase
      */
     public function assertHasReturnsExpectedValue($key, $value, bool $expected): void
     {
-        $this->dataCollection->set($key, $value);
-        $this->assertEquals($this->dataCollection->has($key), $expected);
+        $this->configCollection->set($key, $value);
+        $this->assertEquals($this->configCollection->has($key), $expected);
     }
 
     /**
@@ -86,7 +98,7 @@ final class DataCollectionTest extends TestCase
      */
     public function assertSetAllReturnsExpectedValue(): void
     {
-        $this->assertEquals($this->dataCollection->setAll(['foo' => 'bar']), $this->dataCollection);
+        $this->assertEquals($this->configCollection->setAll(['foo' => 'bar']), $this->configCollection);
     }
 
     /**
@@ -99,8 +111,8 @@ final class DataCollectionTest extends TestCase
     {
         $testData = $this->getDataProviderAsKeyValuePairs();
 
-        $this->dataCollection->setAll($testData);
-        $this->assertEquals($this->dataCollection->getAll(), $testData);
+        $this->configCollection->setAll($testData);
+        $this->assertEquals($this->configCollection->getAll(), $testData);
     }
 
     /**
@@ -111,10 +123,10 @@ final class DataCollectionTest extends TestCase
     public function assertDataCollectionCanBeIterated(): void
     {
         $testData = $this->getDataProviderAsKeyValuePairs();
-        $this->dataCollection->setAll($testData);
+        $this->configCollection->setAll($testData);
 
         $arrayToCompare = [];
-        foreach ($this->dataCollection as $key => $value) {
+        foreach ($this->configCollection as $key => $value) {
             $arrayToCompare[$key] = $value;
         }
 
